@@ -1,0 +1,31 @@
+= link_to "Overall Scores", users_path
+
+- @hrm_sessions.each do |session|
+  .session_item
+    %p= "session id: #{session.id}"
+    %p= "user id: #{session.user_id}"
+    %p= "The Min heart rate for the session: #{calculate_min(session.hrm_data_points)}"
+    %p= "The Max heart rate for the session: #{calculate_max(session.hrm_data_points)}"
+    %p= "The Avg heart rate for the session: #{avg(session.hrm_data_points)}"
+    %p= "The amount of time in zone 1 for #{session.user.username}: #{zone(session.hrm_data_points, session.user.hr_zone1_bpm_min, session.user.hr_zone1_bpm_max)} seconds"
+    %p= "The amount of time in zone 2 for #{session.user.username}: #{zone(session.hrm_data_points, session.user.hr_zone2_bpm_min, session.user.hr_zone2_bpm_max)} seconds"
+    %p= "The amount of time in zone 3 for #{session.user.username}: #{zone(session.hrm_data_points, session.user.hr_zone3_bpm_min, session.user.hr_zone3_bpm_max)} seconds"
+    %p= "The amount of time in zone 4 for #{session.user.username}: #{zone(session.hrm_data_points, session.user.hr_zone4_bpm_min, session.user.hr_zone4_bpm_max)} seconds"
+    %p All Beats per Minute for the current session:
+    = content_tag :div, "", id: "data_view", class: "chart", data: {sessions: "#{data_viz(session.hrm_data_points)}"}
+
+= paginate @hrm_sessions
+
+:javascript
+  var data = $('#data_view').data('sessions');
+
+  var x = d3.scale.linear()
+    .domain([0, d3.max(data)])
+    .range([0, 420]);
+
+  d3.select(".chart")
+    .selectAll("div")
+      .data(data)
+    .enter().append("div")
+      .style("width", function(d) { return x(d) + "px"; })
+      .text(function(d) { return d; });

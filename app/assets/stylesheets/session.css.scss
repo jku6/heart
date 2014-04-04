@@ -1,0 +1,36 @@
+.session_item {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+}
+
+.chart {
+  width: 50%;
+  height: 100%;
+  margin: 5px;
+}
+
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+  max-height: 10px;
+}
+
+.overall {
+  float:left;
+  display: block;
+  padding: 20px;
+
+}
+
+.clearfix:after {
+   content: " "; /* Older browser do not support empty content */
+   visibility: hidden;
+   display: block;
+   height: 0;
+   clear: both;
+}

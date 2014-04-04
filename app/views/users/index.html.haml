@@ -1,0 +1,44 @@
+= link_to "Sessions", root_path
+
+.progress
+
+
+
+.content
+  .overall
+    .min
+      = "Overall Min: #{calculate_min(@all.map{|x| x.hrm_data_points}.flatten)}"
+  .overall
+    .max
+      = "Overall Max: #{calculate_max(@all.map{|x| x.hrm_data_points}.flatten)}"
+  .overall
+    .avg
+      = "Overall Avg: #{avg(@all.map{|x| x.hrm_data_points}.flatten)}"
+  .clearfix
+  .overall
+    .zone1
+      = "Zone1 percent: #{number_to_percentage(@zone1percent*100)}"
+  .overall
+    .zone2
+      = "Zone2 percent: #{number_to_percentage(@zone2percent*100)}"
+  .overall
+    .zone3
+      = "Zone3 percent: #{number_to_percentage(@zone3percent*100)}"
+  .overall
+    .zone4
+      = "Zone4 percent: #{number_to_percentage(@zone4percent*100)}"
+  .clearfix
+
+:javascript
+  function showProgress() {
+  $('.content').hide();
+  $('.progress').fadeIn("slow");
+  }
+
+  $(document).ready(function () {
+    $('.progress').hide();        //hide gif on page load  
+    $('.content').show();  
+    $('.your_button_class').on('click', showProgress); //and show it after clicking your button
+  });
+
+
